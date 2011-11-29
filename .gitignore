@@ -1,3 +1,9 @@
 
 SOLID/*.suo
 SOLID/DIP/obj/x86/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+SOLID/ISP/obj/x86/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+SOLID/LSP/obj/x86/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+SOLID/OCP/obj/x86/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+SOLID/SRL/bin/Debug/SRL.vshost.exe
+SOLID/SRL/bin/Debug/SRL.vshost.exe.manifest
+SOLID/SRL/obj/x86/Debug/DesignTimeResolveAssemblyReferencesInput.cache
