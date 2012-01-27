@@ -9,6 +9,7 @@ namespace LocalizationSample
     {
         static void Main(string[] args)
         {
+
         }
     }
 }
