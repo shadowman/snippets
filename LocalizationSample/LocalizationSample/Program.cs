@@ -50,6 +50,7 @@ namespace LocalizationSample
                     Type = typeof(Article).FullName,
                     Property = "Title"
                 });
+
                 session.Save(new LocalizationEntry
                 {
                     Culture = cultureId,
@@ -60,6 +61,7 @@ namespace LocalizationSample
                 });
             }
 
+            // Read Default
             using (ISession session = factory.OpenSession())
             {
                 article = session.Load<Article>(article.Id);
@@ -67,6 +69,7 @@ namespace LocalizationSample
                 Console.WriteLine("Title: " + article.Title);
             }
 
+            // Read localized for given culture
             using (ISession session = factory.OpenSession(new LocalizationInterceptor(factory, cultureId)))
             {
                 article = session.Load<Article>(article.Id);
