@@ -57,8 +57,9 @@ namespace LocalizationSample
                     IdEntity = article.Id.ToString(),
                     Translation = "Spanish Content",
                     Type = typeof(Article).FullName,
-                    Property = "Title"
+                    Property = "Content"
                 });
+                session.Flush();
             }
 
             // Read Default
@@ -72,6 +73,8 @@ namespace LocalizationSample
             // Read localized for given culture
             using (ISession session = factory.OpenSession(new LocalizationInterceptor(factory, cultureId)))
             {
+                article = session.Load<Article>(article.Id);
+                article = session.Load<Article>(article.Id);
                 article = session.Load<Article>(article.Id);
 
                 Console.WriteLine("Title: " + article.Title);

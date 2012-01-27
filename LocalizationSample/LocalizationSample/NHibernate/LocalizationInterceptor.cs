@@ -27,6 +27,7 @@ namespace LocalizationSample.NHibernate
                 {
                     var translation = (from t in all
                                        where
+                                            t.Culture == Culture &&
                                             t.IdEntity == id.ToString() &&
                                             t.Property == propertyNames[i] &&
                                             t.Type == entity.GetType().FullName

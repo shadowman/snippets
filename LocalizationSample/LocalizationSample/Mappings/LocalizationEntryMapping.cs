@@ -11,12 +11,12 @@ namespace LocalizationSample.Mappings
     {
         public LocalizationEntryMapping()
         {
-            Id(x => x.Id);
+            CompositeId()
+                .KeyProperty(x => x.Culture)
+                .KeyProperty(x => x.IdEntity)
+                .KeyProperty(x => x.Property)
+                .KeyProperty(x => x.Type);
             Map(x => x.Translation);
-            Map(x => x.Culture);
-            Map(x => x.Type);
-            Map(x => x.IdEntity);
-            Map(x => x.Property);
         }
     }
 }
