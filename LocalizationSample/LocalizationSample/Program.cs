@@ -9,6 +9,8 @@ using LocalizationSample.Entities;
 using NHibernate.Tool.hbm2ddl;
 using NHibernate.Cfg;
 using System.IO;
+using System.Threading;
+using LocalizationSample.NHibernate;
 
 namespace LocalizationSample
 {
@@ -22,19 +24,54 @@ namespace LocalizationSample
                         .UsingFile("sample.db")
                         .ShowSql()
                 )
-                .Mappings(x=>x.FluentMappings.AddFromAssemblyOf<Program>())
+                .Mappings(x => x.FluentMappings.AddFromAssemblyOf<Program>())
                 .ExposeConfiguration(BuildDatabase)
                 .BuildSessionFactory();
-            
+
+            Article article = null;
+            String cultureId = Thread.CurrentThread.CurrentUICulture.IetfLanguageTag;
+
             using (ISession session = factory.OpenSession())
             {
-                for (int i = 0; i < 10; i++)
+
+                article = new Article()
                 {
-                    Article article = new Article();
-                    article.Title = "Hello";
-                    article.Content = "Something";
-                    session.Save(article);
-                }
+                    Title = "English Title",
+                    Content = "English Content"
+                };
+
+                session.Save(article);
+                
+                session.Save(new LocalizationEntry
+                {
+                    Culture = cultureId,
+                    IdEntity = article.Id.ToString(),
+                    Translation = "Spanish Title",
+                    Type = typeof(Article).FullName,
+                    Property = "Title"
+                });
+                session.Save(new LocalizationEntry
+                {
+                    Culture = cultureId,
+                    IdEntity = article.Id.ToString(),
+                    Translation = "Spanish Content",
+                    Type = typeof(Article).FullName,
+                    Property = "Title"
+                });
+            }
+
+            using (ISession session = factory.OpenSession())
+            {
+                article = session.Load<Article>(article.Id);
+
+                Console.WriteLine("Title: " + article.Title);
+            }
+
+            using (ISession session = factory.OpenSession(new LocalizationInterceptor(factory, cultureId)))
+            {
+                article = session.Load<Article>(article.Id);
+
+                Console.WriteLine("Title: " + article.Title);
             }
         }
 
